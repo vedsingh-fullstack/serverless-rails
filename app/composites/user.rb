@@ -13,6 +13,15 @@ module User
 
   public_interactor :list_user do; end
 
+  public_interactor :update_user do
+    param :user_id, type: Integer
+    param :data, type: Hash
+  end
+
+  public_interactor :delete_user do
+    param :user_id, type: Integer
+  end
+
   class << self
     private
 

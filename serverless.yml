@@ -29,3 +29,23 @@ functions:
       - http:
           method: get
           path: users/list
+  updateUser:
+    handler: app/composites/user/handler/update_user.Handler.process
+    events:
+      - http:
+          method: put
+          path: users/{user_id}/update
+          request:
+            parameters:
+              paths:
+                user_id: true
+  deleteUser:
+    handler: app/composites/user/handler/delete_user.Handler.process
+    events:
+      - http:
+          method: delete
+          path: users/{user_id}/delete
+          request:
+            parameters:
+              paths:
+                user_id: true

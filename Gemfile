@@ -16,6 +16,8 @@ gem "dry-auto_inject", "0.8.0"
 gem "dry-struct"
 gem "dry-validation"
 gem "dry-schema", "~> 1.6", ">= 1.6.2"
+gem "sentry-ruby", "~> 5"
+gem "sentry-rails", "~> 5"
 
 
 gem 'dynamoid'

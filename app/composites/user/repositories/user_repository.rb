@@ -16,9 +16,6 @@ module User
       map_attribute :last_name,  ::Customer, :last_name
 
       def create(user_data)
-        Rails.logger.info 'user_data'
-        Rails.logger.info user_data
-
         Customer.create(first_name: user_data[:first_name], last_name: user_data[:last_name], email: user_data[:email],
                         created_at: Time.now, updated_at: Time.now)
       end
@@ -31,15 +28,15 @@ module User
         records
       end
 
-      def update(email)
-        customer = Customer.where(email: email)
-
-        customer.update!
+      def update(user_id, user_data)
+        Customer.update(user_id,
+                        { first_name: user_data[:first_name], last_name: user_data[:last_name], email: user_data[:email],
+                          updated_at: Time.now })
       end
 
-      def delete_user(email)
-        customer = Customer.where(email: email)
-        customer.destroy!
+      def delete_user(user_id)
+        customer = Customer.find(user_id)
+        customer.delete
       end
     end
   end
