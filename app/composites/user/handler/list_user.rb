@@ -6,12 +6,6 @@ $app = Rack::Builder.new { run Rails.application }.to_app
 
 class Handler
   def self.process(event:, context:)
-    puts 'Events logged----'
-    puts event
-
-    puts 'Context-----'
-    puts context
-
     users = User.list_user
 
     {
