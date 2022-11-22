@@ -60,7 +60,7 @@ sls invoke -f listUser
 ```
 ## Deploying the function to Lambda using serverless cli
 
-We can deploy all the function at once to serverlss using ```sh sls deploy ```,
+We can deploy all the function at once to serverlss using ```sls deploy```,
 
 
 ```sh
