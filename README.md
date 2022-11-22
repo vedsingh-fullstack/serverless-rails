@@ -1,24 +1,79 @@
-# README
+# Running Ruby on Rails on AWS Lambda and API Gateway by Serverless Framework
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This code helps deploying the sample CRUD rails app to AWS lambda using Serverless framework. 
 
-Things you may want to cover:
+# Getting Started
 
-* Ruby version
+Before you continue, please clone this repository to your local machine.
 
-* System dependencies
+```sh
+# Change directory to your preferred location
+cd <local dev path>
 
-* Configuration
+# Clone the repo
+git clone https://github.com/vedsingh-fullstack/serverless-rails.git
 
-* Database creation
+# Alternatively, with SSH,
+git clone git@github.com:vedsingh-fullstack/serverless-rails.git
+```
 
-* Database initialization
 
-* How to run the test suite
+## Install serverless cli
 
-* Services (job queues, cache servers, search engines, etc.)
+Install the serverless CLI via NPM
 
-* Deployment instructions
+```sh
+npm install -g serverless
+```
 
-* ...
+## Run the bundle install on Lambda like environment
+
+As lambda is using the ubuntu image, gem installation with native extension will not work. We have used the lambci docker image(https://hub.docker.com/r/lambci/lambda/) to install the package with native extension to test serverless function locally.
+
+```sh
+docker run -v `pwd`:`pwd` -w `pwd` -it lambci/lambda:build-ruby2.7 bundle install --no-deployment
+
+docker run -v `pwd`:`pwd` -w `pwd` -it lambci/lambda:build-ruby2.7 bundle install --deployment
+
+```
+
+## Testing the function/services locally
+
+To test the function mentioned in serverless.yml file locally in lambda like enviroment use the following 
+
+```sh
+
+docker run --rm -v "$PWD":/var/task:ro,delegated -e RAILS_ENV=staging  lambci/lambda:ruby2.7 app/composites/user/handler/listUser.Handler.process
+
+# Run with event
+
+docker run --rm -v "$PWD":/var/task:ro,delegated -e RAILS_ENV=staging  lambci/lambda:ruby2.7 app/composites/user/handler/update_user.Handler.process '{"event": "test_event"}'
+```
+
+We can also test already deployed function locally using serverless cli
+
+
+```sh
+
+sls invoke -f listUser
+
+```
+## Deploying the function to Lambda using serverless cli
+
+We can deploy all the function at once to serverlss using ```sh sls deploy ```,
+
+
+```sh
+
+sls deploy --aws-profile personal_aws
+
+```
+
+We can also deploy individual function which is quicker,
+
+```sh
+
+sls deploy function --function listUser --aws-profile personal_aws
+
+```
+
